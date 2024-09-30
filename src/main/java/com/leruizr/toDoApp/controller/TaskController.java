@@ -33,4 +33,14 @@ public class TaskController {
 
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
+
+    // Endpoint para consultar una tarea por su id
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
+
+        Task task = taskService.getTaskById(id);
+
+        return new ResponseEntity<>(task, HttpStatus.OK);
+    }
 }
