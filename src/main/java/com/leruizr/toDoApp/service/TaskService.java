@@ -21,4 +21,10 @@ public class TaskService {
 
         return taskRepository.save(task);
     }
+
+    // Método para consultar todas las tareas
+
+    public Iterable<Task> getAllTasks() {
+        return taskRepository.findAll();
+    }
 }

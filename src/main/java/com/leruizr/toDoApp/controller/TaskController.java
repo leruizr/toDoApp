@@ -23,4 +23,14 @@ public class TaskController {
 
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
+
+    // Endpoint para consultar todas las tareas
+
+    @GetMapping
+    public ResponseEntity<Iterable<Task>> getAllTasks() {
+
+        Iterable<Task> tasks = taskService.getAllTasks();
+
+        return new ResponseEntity<>(tasks, HttpStatus.OK);
+    }
 }
