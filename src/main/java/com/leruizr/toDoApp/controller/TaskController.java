@@ -53,4 +53,14 @@ public class TaskController {
 
         return new ResponseEntity<>(updatedTask, HttpStatus.OK);
     }
+
+    // Endpoint para eliminar una tarea por su id
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+
+        taskService.deleteTask(id);
+
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
 }
