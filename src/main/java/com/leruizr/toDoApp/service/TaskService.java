@@ -27,4 +27,10 @@ public class TaskService {
     public Iterable<Task> getAllTasks() {
         return taskRepository.findAll();
     }
+
+    // Método para consultar una tarea por su id
+
+    public Task getTaskById(Long id) {
+        return taskRepository.findById(id).orElse(null);
+    }
 }
