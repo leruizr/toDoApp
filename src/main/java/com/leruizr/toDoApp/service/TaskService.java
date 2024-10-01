@@ -33,4 +33,20 @@ public class TaskService {
     public Task getTaskById(Long id) {
         return taskRepository.findById(id).orElse(null);
     }
+
+    // Método para actualizar una tarea por su id
+
+    public Task updateTask(Long id, Task task) {
+        Task taskToUpdate = taskRepository.findById(id).orElse(null);
+
+        if (taskToUpdate == null) {
+            return null;
+        }
+
+        taskToUpdate.setTitle(task.getTitle());
+        taskToUpdate.setDescription(task.getDescription());
+        taskToUpdate.setUpdatedAt(LocalDateTime.now());
+
+        return taskRepository.save(taskToUpdate);
+    }
 }

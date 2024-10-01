@@ -43,4 +43,14 @@ public class TaskController {
 
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
+
+    // Endpoint para actualizar una tarea por su id
+
+    @PutMapping("/{id}")
+    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+
+        Task updatedTask = taskService.updateTask(id, task);
+
+        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+    }
 }
