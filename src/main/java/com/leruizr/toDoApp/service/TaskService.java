@@ -49,4 +49,11 @@ public class TaskService {
 
         return taskRepository.save(taskToUpdate);
     }
+
+    // Método para eliminar una tarea por su id
+
+    public void deleteTask(Long id) {
+        taskRepository.deleteById(id);
+    }
+
 }
