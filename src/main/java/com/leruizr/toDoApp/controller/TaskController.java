@@ -2,6 +2,7 @@ package com.leruizr.toDoApp.controller;
 
 import com.leruizr.toDoApp.model.Task;
 import com.leruizr.toDoApp.service.TaskService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,8 +15,6 @@ public class TaskController {
     @Autowired
     private TaskService taskService;
 
-    // Endpoint para crear una nueva tarea
-
     @PostMapping
     public ResponseEntity<Task> createTask(@RequestBody Task task) {
 
@@ -23,8 +22,6 @@ public class TaskController {
 
         return new ResponseEntity<>(createdTask, HttpStatus.CREATED);
     }
-
-    // Endpoint para consultar todas las tareas
 
     @GetMapping
     public ResponseEntity<Iterable<Task>> getAllTasks() {
@@ -34,8 +31,6 @@ public class TaskController {
         return new ResponseEntity<>(tasks, HttpStatus.OK);
     }
 
-    // Endpoint para consultar una tarea por su id
-
     @GetMapping("/{id}")
     public ResponseEntity<Task> getTaskById(@PathVariable Long id) {
 
@@ -44,23 +39,26 @@ public class TaskController {
         return new ResponseEntity<>(task, HttpStatus.OK);
     }
 
-    // Endpoint para actualizar una tarea por su id
-
     @PutMapping("/{id}")
-    public ResponseEntity<Task> updateTask(@PathVariable Long id, @RequestBody Task task) {
+    public ResponseEntity<String> updateTask(@PathVariable Long id, @Valid @RequestBody Task task) {
+        try {
+            Task updatedTask = taskService.updateTask(id, task);
+            return new ResponseEntity<>("Tarea actualizada exitosamente", HttpStatus.OK);
 
-        Task updatedTask = taskService.updateTask(id, task);
-
-        return new ResponseEntity<>(updatedTask, HttpStatus.OK);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
-
-    // Endpoint para eliminar una tarea por su id
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTask(@PathVariable Long id) {
+    public ResponseEntity<String> deleteTask(@PathVariable Long id) {
+        try {
+            taskService.deleteTask(id);
+            return new ResponseEntity<>("Tarea eliminada exitosamente", HttpStatus.NO_CONTENT);
 
-        taskService.deleteTask(id);
-
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } catch (IllegalArgumentException e) {
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+        }
     }
+
 }
